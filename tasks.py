@@ -86,8 +86,8 @@ def compute_output_size_2d(input_matrix, kernel_matrix):
     kernel_width = kernel_matrix.shape[1]
 
     
-    tuple_dimensions = (input_height - kernel_height + 1, input_width - kernel_width + 1)
-    return(tuple_dimensions)
+    output_size_2d = (input_height - kernel_height + 1, input_width - kernel_width + 1)
+    return(output_size_2d)
 
 
 # -----------------------------------------------
@@ -98,13 +98,34 @@ def compute_output_size_2d(input_matrix, kernel_matrix):
 # Your function will likely use lots of looping and you can reuse the functions you made above.
 
 # Your code here:
+# Tip: same tips as above, but you might need a nested loop here in order to
+# define which parts of the input matrix need to be multiplied with the kernel matrix
 # -----------------------------------------------
+
+
 def convolute_2d(input_matrix, kernel_matrix):
 
-    
-    # Tip: same tips as above, but you might need a nested loop here in order to
-    # define which parts of the input matrix need to be multiplied with the kernel matrix.
-    pass
+    # Calculate output dimensions
+    output_height, output_width = compute_output_size_2d(
+        input_matrix, kernel_matrix
+    )
 
+    # Create empty output matrix
+    output_matrix = np.zeros((output_height, output_width))
+
+    # Loop through rows and columns
+    for i in range(output_height):
+        for j in range(output_width):
+
+            # Select the part of the input matrix
+            region = input_matrix[
+                i:i+kernel_matrix.shape[0],
+                j:j+kernel_matrix.shape[1]
+            ]
+
+            # Multiply element by element and sum
+            output_matrix[i, j] = (region * kernel_matrix).sum()
+
+    return output_matrix
 
 # -----------------------------------------------
