@@ -1,5 +1,7 @@
 import numpy as np
-
+import numpy as np
+from tasks import *
+from numpy.testing import assert_array_equal
 # Follow the tasks below to practice basic Python concepts.
 # Write your code in between the dashed lines.
 # Don't import additional packages. Numpy suffices.
@@ -14,16 +16,24 @@ import numpy as np
 
 # Your code here:
 # -----------------------------------------------
+input_array = np.array([])
+kernel_array = np.array([])
 
 def compute_output_size_1d(input_array, kernel_array):
-    pass
-
+    input_length = len(input_array)
+    kernel_length = len(kernel_array)
+    output = input_length - kernel_length + 1
+    return output
+    
+print("next task")
 
 # -----------------------------------------------
 # Example:
 input_array = np.array([1, 2, 3, 4, 5])
 kernel_array = np.array([1, 0, -1])
 print(compute_output_size_1d(input_array, kernel_array))
+
+
 
 
 # Task 2: 1D Convolution
@@ -34,10 +44,22 @@ print(compute_output_size_1d(input_array, kernel_array))
 # Your code here:
 # -----------------------------------------------
 
-def convolve_1d(input_array, kernel_array):
+def convolve_1d(input_array, kernel_array):   
+  
+    output_length = compute_output_size_1d(input_array, kernel_array)
+
+    output_array = np.zeros(output_length)
+
+    for i in range(output_length):
+
+        output_array[i] = (
+            input_array[i:i+len(kernel_array)] * kernel_array).sum()
+
+    return output_array
+
     # Tip: start by initializing an empty output array (you can use your function above to calculate the correct size).
     # Then fill the cells in the array with a loop.
-    pass
+    
 
 # -----------------------------------------------
 # Another tip: write test cases like this, so you can easily test your function.
@@ -52,15 +74,23 @@ print(convolve_1d(input_array, kernel_array))
 # The dimensions of the output (assuming no padding and a stride of one) can be computed as follows:
 # (input_height - kernel_height + 1, input_width - kernel_width + 1)
 
+
 # Your code here:
 # -----------------------------------------------
 
 def compute_output_size_2d(input_matrix, kernel_matrix):
-    pass
+
+    input_height = input_matrix.shape[0]
+    kernel_height = kernel_matrix.shape[0]
+    input_width = input_matrix.shape[1]
+    kernel_width = kernel_matrix.shape[1]
+
+    
+    tuple_dimensions = (input_height - kernel_height + 1, input_width - kernel_width + 1)
+    return(tuple_dimensions)
 
 
 # -----------------------------------------------
-
 
 # Task 4: 2D Convolution
 # Instructions:
@@ -70,6 +100,8 @@ def compute_output_size_2d(input_matrix, kernel_matrix):
 # Your code here:
 # -----------------------------------------------
 def convolute_2d(input_matrix, kernel_matrix):
+
+    
     # Tip: same tips as above, but you might need a nested loop here in order to
     # define which parts of the input matrix need to be multiplied with the kernel matrix.
     pass
